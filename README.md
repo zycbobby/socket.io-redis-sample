@@ -17,6 +17,16 @@ io.sockets.on('connection', function(socket) {
 });
 ```
 broadcast 和 emit都不仅仅能找到当前进程所handle的sockets,而且能找到redis里头存的sockets，并且广播或者定向发送
+值得注意的是，emitter只会往redis发，而响应redis的broadcast的只有前端。
+
+```javascript
+var io = require('socket.io-emitter')({ host: '127.0.0.1', port: 6379 });
+setInterval(function(){
+    console.log('emit Hello'); 
+    io.emit('message', 'Hello World');
+    io.emit('redis', 'Hello World');
+}, 5000);
+```
 
 
 # socket.io-redis-sample
